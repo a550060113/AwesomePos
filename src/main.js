@@ -3,7 +3,7 @@ import App from './App'
 import router from './router'
 //初始化样式
 import 'normalize.css'
-
+import './iconfont/iconfont.css'
 //引入element-ui
 
 import ElementUI from 'element-ui';

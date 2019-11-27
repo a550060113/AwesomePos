@@ -34,12 +34,24 @@
             //登录校验
             submitForm(formName){
                 this.$refs[formName].validate((valid)=>{
-                    if(valid && this.isover){
+                    if (valid == false){
                         this.$message({
-                            message: '恭喜你，这是一条成功消息',
-                            type: 'success'
-                        })
+                            message: '请检查',
+                            type: 'warning'
+                        });
+                        return
                     }
+                    if(this.isover === false){
+                        this.$message({
+                            message: '请把滑块移到最右边',
+                            type: 'warning'
+                        });
+                        return;
+                    }
+                    this.$message({
+                        message: '登录成功',
+                        type: 'success'
+                    });
                 })
             }
         },

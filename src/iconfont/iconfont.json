@@ -1,0 +1,65 @@
+{
+  "id": "1443149",
+  "name": "pos",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5013",
+      "name": "列表",
+      "font_class": "liebiao",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "5019",
+      "name": "汉堡",
+      "font_class": "hanbao",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "5027",
+      "name": "手机",
+      "font_class": "shouji",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "5033",
+      "name": "钻石",
+      "font_class": "zuanshi",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "68270",
+      "name": "购买",
+      "font_class": "goumai",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "77031",
+      "name": "店铺",
+      "font_class": "dianpu",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "77034",
+      "name": "会员卡",
+      "font_class": "huiyuanqia",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "77107",
+      "name": "功能建议",
+      "font_class": "gongnengjianyi",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    }
+  ]
+}
