@@ -45,7 +45,6 @@
                    <el-tabs v-model="activeName" >
                        <el-tab-pane label="点餐" name="first">
                            <el-table
-
                                    :data="tableData"
                                    border
                                    style="width: 100%"
@@ -57,7 +56,7 @@
                                        >
                                </el-table-column>
                                <el-table-column
-                                       prop="num"
+                                       prop="count"
                                        label="量"
                                        width="50"
                                        >
@@ -75,7 +74,7 @@
                                        >
                                    <template slot-scope="scope">
                                        <el-button @click="handleClick(scope.row)" type="text" size="small">增加</el-button>
-                                       <el-button type="text" size="small">删除</el-button>
+                                       <el-button @click="decrease(scope.row)" type="text" size="small">删除</el-button>
                                    </template>
                                </el-table-column>
                            </el-table>
@@ -98,14 +97,21 @@
                     </div>
                     <div class="goods-list">
                         <ul>
-                            <li v-for="(item,index) in oftenGoods">{{item.goodsName}} <span>¥{{item.price}}元</span></li>
+                            <li @click="addGoodsItem(item)" v-for="(item,index) in oftenGoods">{{item.goodsName}} <span>¥{{item.price}}元</span></li>
                         </ul>
                     </div>
                     <div class="goods-type">
-
                         <el-tabs>
                             <el-tab-pane label="汉堡">
-                                汉堡
+                                <div>
+                                    <ul class="cookList">
+                                        <li>
+                                            <span class="foodImg"><img src="../assets/hb.png" width="100%"></span>
+                                            <span class="foodName">香辣鸡腿堡</span>
+                                            <span class="foodPrice">￥19</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </el-tab-pane>
                             <el-tab-pane label="小食">
                                 小食
@@ -127,6 +133,20 @@
 
 <script>
     export default {
+        watch:{
+            'tableData':function (newValue) {
+                var allCount = 0
+                var allPrice = 0
+                for(var i = 0;i<newValue.length;i++){
+                    allCount += newValue[i].count
+                }
+                for(var i = 0;i<newValue.length;i++){
+                    allPrice += (newValue[i].price * newValue[i].count )
+                }
+                this.totalCount = allCount
+                this.totalMoney = allPrice
+            }
+        },
         data(){
             return{
                 activeName2:'first',
@@ -135,13 +155,7 @@
                 activeName:'first',
                 totalCount:0,
                 totalMoney:0,
-                tableData:[{
-                        goodsId:1,
-                        num:1,
-                        goodsName:'香辣鸡腿堡',
-                        price:18,
-
-                }],
+                tableData:[],
                 oftenGoods:[
                     {
                         goodsId:1,
@@ -185,15 +199,53 @@
                         price:17
                     }
 
-                ]
+                ],
+                type0Goods:[{
+                    goodsId:1,
+                    goodsImg:"http://7xjyw1.com1.z0.glb.clouddn.com/pos001.jpg",
+                    goodsName:'香辣鸡腿堡',
+                    price:18
+                }],
+                type1Goods:[],
+                type2Goods:[],
+                type3Goods:[]
             }
         },
         methods:{
-            delAllGoods(){
+            addGoodsItem(goods){
+                var isHas = this.tableData.some(item=>{
+                    return item.goodsId == goods.goodsId
+                })
 
+                if(isHas){
+                    var index = this.tableData.findIndex(item=>{
+                        return  item.goodsId == goods.goodsId
+                    })
+                    this.tableData[index].count ++
+                    this.allCount()
+                }else{
+                    let newGoods = {goodsId:goods.goodsId,goodsName:goods.goodsName,price:goods.price,count:1}
+                    this.tableData.push(newGoods)
+                }
+            },
+            delAllGoods(){
+                    this.tableData = [];
+                    this.totalCount = 0;
+                    this.totalMoney = 0
             },
             checkout(){
+                if(this.tableData.length != 0){
+                    this.tableData = [];
+                    this.totalCount = 0;
+                    this.totalMoney = 0;
+                    this.$message({
+                        message: '结账成功，感谢你又为店里出了一份力!',
+                        type: 'success'
+                    });
+                }else{
+                    this.$message.error('不能空结。老板了解你急切的心情！');
 
+                }
             },
             changDirection(){
                 this.isCollapse = !this.isCollapse
@@ -204,7 +256,33 @@
                 }
             },
             handleClick(row) {
-                console.log(row);
+                var index = 0
+                this.totalCount = this.totalMoney = 0
+                for(var i = 0;i<this.tableData.length;i++){
+                    if(row.goodsId == this.tableData[i].goodsId){
+                        index = i
+                        break;
+                    }
+                }
+                this.tableData[index].count ++
+                this.allCount()
+            },
+            decrease(row){
+                var index = this.tableData.findIndex(item=>{
+                    return item.goodsId == row.goodsId
+                })
+                this.tableData.splice(index,1)
+            },
+            allCount(){
+                var allCount = 0;
+                var allPrice = 0;
+                this.tableData.forEach(item=>{
+                    allCount += item.count
+                    allPrice += item.price * item.count
+                })
+                this.totalCount = allCount
+                this.totalMoney = allPrice
+
             }
         }
     }
@@ -280,5 +358,37 @@
     }
     .el-tabs__header.is-top{
         background:#FFFFFF!important;
+    }
+    .cookList li{
+        list-style: none;
+        width:23%;
+        border:1px solid #E5E9F2;
+        height: auto;
+        overflow: hidden;
+        background-color:#fff;
+        padding: 2px;
+        float:left;
+        margin: 2px;
+        cursor: pointer;
+    }
+    .cookList{
+        padding: 30px;
+    }
+    .cookList li span{
+        display: block;
+        float:left;
+    }
+    .foodImg{
+        width: 40%;
+    }
+    .foodName{
+        font-size: 18px;
+        padding-left: 10px;
+        color:brown;
+    }
+    .foodPrice{
+        font-size: 16px;
+        padding-left: 10px;
+        padding-top:10px;
     }
 </style>
