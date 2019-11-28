@@ -105,22 +105,46 @@
                             <el-tab-pane label="汉堡">
                                 <div>
                                     <ul class="cookList">
-                                        <li>
-                                            <span class="foodImg"><img src="../assets/hb.png" width="100%"></span>
-                                            <span class="foodName">香辣鸡腿堡</span>
-                                            <span class="foodPrice">￥19</span>
+                                        <li @click="addGoodsItem(item)" v-for="(item,index) in type0Goods">
+                                            <span class="foodImg"><img :src="item.goodsImg" width="100%"></span>
+                                            <span class="foodName">{{item.goodsName}}</span>
+                                            <span class="foodPrice">￥{{item.price}}</span>
                                         </li>
                                     </ul>
                                 </div>
                             </el-tab-pane>
                             <el-tab-pane label="小食">
-                                小食
+                                <div>
+                                    <ul class="cookList">
+                                        <li @click="addGoodsItem(item)" v-for="(item,index) in type1Goods">
+                                            <span class="foodImg"><img :src="item.goodsImg" width="100%"></span>
+                                            <span class="foodName">{{item.goodsName}}</span>
+                                            <span class="foodPrice">￥{{item.price}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </el-tab-pane>
                             <el-tab-pane label="饮料">
-                                饮料
+                                <div>
+                                    <ul class="cookList">
+                                        <li @click="addGoodsItem(item)" v-for="(item,index) in type2Goods">
+                                            <span class="foodImg"><img :src="item.goodsImg" width="100%"></span>
+                                            <span class="foodName">{{item.goodsName}}</span>
+                                            <span class="foodPrice">￥{{item.price}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </el-tab-pane>
                             <el-tab-pane label="套餐">
-                                套餐
+                                <div>
+                                    <ul class="cookList">
+                                        <li @click="addGoodsItem(item)" v-for="(item,index) in type3Goods">
+                                            <span class="foodImg"><img :src="item.goodsImg" width="100%"></span>
+                                            <span class="foodName">{{item.goodsName}}</span>
+                                            <span class="foodPrice">￥{{item.price}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </el-tab-pane>
 
                         </el-tabs>
@@ -202,9 +226,19 @@
                 ],
                 type0Goods:[{
                     goodsId:1,
-                    goodsImg:"http://7xjyw1.com1.z0.glb.clouddn.com/pos001.jpg",
+                    goodsImg:'http://img0.imgtn.bdimg.com/it/u=402073944,4068048520&fm=26&gp=0.jpg',
                     goodsName:'香辣鸡腿堡',
                     price:18
+                },{
+                    goodsId:2,
+                    goodsImg:"http://img5.imgtn.bdimg.com/it/u=2331244070,444133857&fm=26&gp=0.jpg",
+                    goodsName:'田园鸡腿堡',
+                    price:15
+                }, {
+                    goodsId:3,
+                    goodsImg:"http://img3.imgtn.bdimg.com/it/u=2073900585,2423507122&fm=26&gp=0.jpg",
+                    goodsName:'和风汉堡',
+                    price:15
                 }],
                 type1Goods:[],
                 type2Goods:[],
@@ -348,47 +382,37 @@
         border: 1px solid #ccc;
         margin: 10px;
         background-color: #FFFFFF;
+        cursor: pointer;
     }
     .goods-list ul li > span{
         color: #57c9ee;
     }
-    .goods-type{
-        clear: both;
-        /*background: #fff;*/
-    }
-    .el-tabs__header.is-top{
-        background:#FFFFFF!important;
-    }
-    .cookList li{
-        list-style: none;
-        width:23%;
-        border:1px solid #E5E9F2;
-        height: auto;
-        overflow: hidden;
-        background-color:#fff;
-        padding: 2px;
-        float:left;
-        margin: 2px;
-        cursor: pointer;
-    }
     .cookList{
+        overflow: hidden;
         padding: 30px;
     }
-    .cookList li span{
-        display: block;
-        float:left;
+    .cookList >li{
+        width: 190px;
+        height: 70px;
+        float: left;
+        overflow: hidden;
+        background: #FFFFFF;
+        cursor: pointer;
+        margin: 0 5px;
+        padding: 2px;
+        border: rgba(0,0,0,0.1) solid 0.6px;
     }
+    .cookList >li>span{float: left}
     .foodImg{
-        width: 40%;
+        width: 80px;
+        height: 100%;
+    }
+    .foodImg>img{
+        height: 100%;
     }
     .foodName{
-        font-size: 18px;
-        padding-left: 10px;
-        color:brown;
+        margin: 10px;
+        color: darkred;
     }
-    .foodPrice{
-        font-size: 16px;
-        padding-left: 10px;
-        padding-top:10px;
-    }
+    .foodPrice{margin-left: 10px}
 </style>
