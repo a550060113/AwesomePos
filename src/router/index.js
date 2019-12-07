@@ -13,10 +13,18 @@ export default new Router({
     // },
     {
       path:'/',
+      redirect:'/home'
+    },
+    {
+      path:'/home',
       name:'home',
       component:resolve => require(['@/components/home.vue'],resolve),
       children:[{
-        path:"",
+        path:"/home",
+        redirect:'/home/collect'
+      },{
+        path:'collect',
+        name:'collect',
         component:resolve =>require(['@/views/collect.vue'],resolve)
       }]
     }

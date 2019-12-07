@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
          <div class="main-left">
                    <el-tabs v-model="activeName" >
                        <el-tab-pane label="点餐" name="first">
@@ -49,8 +49,8 @@
                        <el-tab-pane label="挂单" name="second">配置管理</el-tab-pane>
                        <el-tab-pane label="外卖" name="third">角色管理</el-tab-pane>
                    </el-tabs>
-               </div>
-                <div class="main-right">
+         </div>
+          <div class="main-right">
                     <div class="often-goods">
                         常用商品
                     </div>
@@ -108,7 +108,7 @@
 
                         </el-tabs>
                     </div>
-                </div>
+          </div>  
     </div>
 </template>   
 
@@ -272,27 +272,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-  
-        .right{
-            /*height: 100%;*/
-            flex: 1;
-        }
-        .header{
-            height: 7%;
-            background: #3a3f51;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 24px;
-            color: #ffffff;
-        }
+      .container{
+          display: flex
+      }
     
-    .main-content{
-        display: flex;
-        height: 93%;
-        box-sizing: border-box;
-
+   
         .main-left{
             width: 27%;
             border-right: 2.5px solid #f6f6f6;
@@ -302,7 +286,7 @@ export default {
             flex:1;
             background-color: #f3f5fa;
         }
-    }
+    
     .totalDiv{
         background-color: #fff;
         padding: 10px;
