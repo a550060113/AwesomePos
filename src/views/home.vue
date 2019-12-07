@@ -186,7 +186,6 @@
     export default {
         watch:{
             '$route':function(value){
-                console.log(this.$route)
                 this.matched = value.matched.slice(1)
             }
         },

@@ -9,7 +9,7 @@ export default new Router({
     // {
     //   path: '/',
     //   name: 'login',
-    //   component:resolve => require(['@/components/login.vue'],resolve)
+    //   component:resolve => require(['@/views/login.vue'],resolve)
     // },
     {
       path:'/',
@@ -19,7 +19,7 @@ export default new Router({
       path:'/home',
       name:'home',
       meta:{title:'首页'},
-      component:resolve => require(['@/components/home.vue'],resolve),
+      component:resolve => require(['@/views/home.vue'],resolve),
       children:[
       //   {
       //   path:"/home",

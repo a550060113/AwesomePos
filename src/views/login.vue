@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import drag from '@/commens/drag'
+    import drag from '@/components/drag'
     export default {
         components:{
             drag
