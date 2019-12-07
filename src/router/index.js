@@ -14,7 +14,11 @@ export default new Router({
     {
       path:'/',
       name:'home',
-      component:resolve => require(['@/components/home.vue'],resolve)
+      component:resolve => require(['@/components/home.vue'],resolve),
+      children:[{
+        path:"",
+        component:resolve =>require(['@/views/collect.vue'],resolve)
+      }]
     }
   ]
 })

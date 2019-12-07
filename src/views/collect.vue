@@ -1,63 +1,6 @@
 <template>
-    <div class="wrapper">
-       <div class="col aside">
-           <div class="collect_money" v-if="isCollapse">
-               <p>收银</p>
-               <span>系统</span>
-           </div>
-             <div class="collect_money" v-else>
-               收银系统
-           </div>
-            <el-menu
-                    class="el-menu-vertical-demo"
-                    :collapse="isCollapse"
-                    :collapse-transition='true'
-                    default-active="1"
-                    background-color="#3a3f51"
-                    text-color="#fff"
-                    mode="vertical"
-            >
-            <el-submenu index="1">
-                <template slot="title">
-                <i class="iconfont icon-goumai"></i>
-                    <span slot="title">收银</span>
-                </template>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-                
-
-            </el-submenu>
-   <el-menu-item index="2">
-                    <i class="iconfont icon-dianpu"></i>
-                    <span slot="title">店铺</span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                    <i class="iconfont icon-hanbao"></i>
-                    <span slot="title">商品</span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <i class="iconfont icon-huiyuanqia"></i>
-                    <span slot="title">会员</span>
-                </el-menu-item>
-                <el-menu-item index="5">
-                    <i class="iconfont icon-zuanshi"></i>
-                    <span slot="title">统计</span>
-                </el-menu-item>
-                <el-menu-item index="6">
-                    <i class="iconfont icon-gongnengjianyi"></i>
-                    <span slot="title">设置</span>
-                </el-menu-item>
-                    
-            </el-menu>
-       </div>
-        <div class="col right">
-            <div class="header">
-               <span @click="changDirection">
-                    <i :class="icon"></i>
-               </span>
-            </div>
-            <div class="main-content">
-               <!-- <div class="main-left">
+    <div>
+         <div class="main-left">
                    <el-tabs v-model="activeName" >
                        <el-tab-pane label="点餐" name="first">
                            <el-table
@@ -165,64 +108,172 @@
 
                         </el-tabs>
                     </div>
-                </div> -->
-                <router-view></router-view>
-            </div>
-        </div>
+                </div>
     </div>
-</template>
+</template>   
 
 <script>
-    export default {
+export default {
         watch:{
-            
+            'tableData':function (newValue) {
+                var allCount = 0
+                var allPrice = 0
+                for(var i = 0;i<newValue.length;i++){
+                    allCount += newValue[i].count
+                }
+                for(var i = 0;i<newValue.length;i++){
+                    allPrice += (newValue[i].price * newValue[i].count )
+                }
+                this.totalCount = allCount
+                this.totalMoney = allPrice
+            }
         },
         data(){
             return{
                 activeName2:'first',
                 isCollapse:false,
                 icon:'el-icon-s-unfold',
-                activeName:'first'
+                activeName:'first',
+                totalCount:0,
+                totalMoney:0,
+                tableData:[],
+                oftenGoods:[
+                    {
+                        goodsId:1,
+                        goodsName:'香辣鸡腿堡',
+                        price:18
+                    }, {
+                        goodsId:2,
+                        goodsName:'田园鸡腿堡',
+                        price:15
+                    }, {
+                        goodsId:3,
+                        goodsName:'和风汉堡',
+                        price:15
+                    }, {
+                        goodsId:4,
+                        goodsName:'快乐全家桶',
+                        price:80
+                    }, {
+                        goodsId:5,
+                        goodsName:'脆皮炸鸡腿',
+                        price:10
+                    }, {
+                        goodsId:6,
+                        goodsName:'魔法鸡块',
+                        price:20
+                    }, {
+                        goodsId:7,
+                        goodsName:'可乐大杯',
+                        price:10
+                    }, {
+                        goodsId:8,
+                        goodsName:'雪顶咖啡',
+                        price:18
+                    }, {
+                        goodsId:9,
+                        goodsName:'大块鸡米花',
+                        price:15
+                    }, {
+                        goodsId:20,
+                        goodsName:'香脆鸡柳',
+                        price:17
+                    }
+
+                ],
+                type0Goods:[{
+                    goodsId:1,
+                    goodsImg:'http://img0.imgtn.bdimg.com/it/u=402073944,4068048520&fm=26&gp=0.jpg',
+                    goodsName:'香辣鸡腿堡',
+                    price:18
+                },{
+                    goodsId:2,
+                    goodsImg:"http://img5.imgtn.bdimg.com/it/u=2331244070,444133857&fm=26&gp=0.jpg",
+                    goodsName:'田园鸡腿堡',
+                    price:15
+                }, {
+                    goodsId:3,
+                    goodsImg:"http://img3.imgtn.bdimg.com/it/u=2073900585,2423507122&fm=26&gp=0.jpg",
+                    goodsName:'和风汉堡',
+                    price:15
+                }],
+                type1Goods:[],
+                type2Goods:[],
+                type3Goods:[]
             }
         },
         methods:{
-           changDirection(){
-                this.isCollapse = !this.isCollapse
-                if (this.isCollapse){
-                    this.icon = 'el-icon-s-fold'
+            addGoodsItem(goods){
+                var isHas = this.tableData.some(item=>{
+                    return item.goodsId == goods.goodsId
+                })
+
+                if(isHas){
+                    var index = this.tableData.findIndex(item=>{
+                        return  item.goodsId == goods.goodsId
+                    })
+                    this.tableData[index].count ++
+                    this.allCount()
                 }else{
-                    this.icon = 'el-icon-s-unfold'
+                    let newGoods = {goodsId:goods.goodsId,goodsName:goods.goodsName,price:goods.price,count:1}
+                    this.tableData.push(newGoods)
                 }
+            },
+            delAllGoods(){
+                    this.tableData = [];
+                    this.totalCount = 0;
+                    this.totalMoney = 0
+            },
+            checkout(){
+                if(this.tableData.length != 0){
+                    this.tableData = [];
+                    this.totalCount = 0;
+                    this.totalMoney = 0;
+                    this.$message({
+                        message: '结账成功，感谢你又为店里出了一份力!',
+                        type: 'success'
+                    });
+                }else{
+                    this.$message.error('不能空结。老板了解你急切的心情！');
+
+                }
+            },
+            handleClick(row) {
+                var index = 0
+                this.totalCount = this.totalMoney = 0
+                for(var i = 0;i<this.tableData.length;i++){
+                    if(row.goodsId == this.tableData[i].goodsId){
+                        index = i
+                        break;
+                    }
+                }
+                this.tableData[index].count ++
+                this.allCount()
+            },
+            decrease(row){
+                var index = this.tableData.findIndex(item=>{
+                    return item.goodsId == row.goodsId
+                })
+                this.tableData.splice(index,1)
+            },
+            allCount(){
+                var allCount = 0;
+                var allPrice = 0;
+                this.tableData.forEach(item=>{
+                    allCount += item.count
+                    allPrice += item.price * item.count
+                })
+                this.totalCount = allCount
+                this.totalMoney = allPrice
+
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .wrapper{
-        
-        .collect_money{
-             color: #fff;
-             text-align: center;
-             font-weight: bolder;
-             font-size: 20px;
-             padding-top: 10px;
-            
-        }
-        width: 100%;
-        height: 100%;
-        display: flex;
-        /*align-items:stretch;*/
-        .el-menu{border: none;}
-        .is-active{color:#409EFF!important; }
-        .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
-  }
-        .aside{
-         
-            background: #3a3f51;
-        }
+
+  
         .right{
             /*height: 100%;*/
             flex: 1;
@@ -236,7 +287,7 @@
             font-size: 24px;
             color: #ffffff;
         }
-    }
+    
     .main-content{
         display: flex;
         height: 93%;
