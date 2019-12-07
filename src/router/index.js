@@ -18,14 +18,23 @@ export default new Router({
     {
       path:'/home',
       name:'home',
+      meta:{title:'首页'},
       component:resolve => require(['@/components/home.vue'],resolve),
-      children:[{
-        path:"/home",
-        redirect:'/home/collect'
-      },{
+      children:[
+      //   {
+      //   path:"/home",
+      //   redirect:'/home/collect'
+      // },
+      {
         path:'collect',
         name:'collect',
+        meta:{title:'收银'},
         component:resolve =>require(['@/views/collect.vue'],resolve)
+      },{
+        path:'test',
+        name:'test',
+        meta:{title:'测试'},
+        component:resolve=>require(['@/views/test.vue'],resolve)
       }]
     }
   ]

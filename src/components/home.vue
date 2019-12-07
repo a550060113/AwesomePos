@@ -9,21 +9,25 @@
                收银系统
            </div>
             <el-menu
+                    router
                     class="el-menu-vertical-demo"
                     :collapse="isCollapse"
                     :collapse-transition='true'
-                    default-active="1"
+                    default-active="/home/collect"
                     background-color="#3a3f51"
                     text-color="#fff"
                     mode="vertical"
             >
-            <el-submenu index="1">
+            <el-submenu index="1" >
                 <template slot="title">
                 <i class="iconfont icon-goumai"></i>
-                    <span slot="title">收银</span>
+                    <span slot="title">首页</span>
                 </template>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
+               
+                <el-menu-item index="/home/collect">收银</el-menu-item>
+                
+                    
+                    <el-menu-item index="/home/test">选项2</el-menu-item>
                 
 
             </el-submenu>
@@ -52,9 +56,13 @@
        </div>
         <div class="col right">
             <div class="header">
-               <span @click="changDirection">
-                    <i :class="icon"></i>
+               <span style="margin-right:20px" @click="changDirection">
+                    <i style="color:#000" :class="icon"></i>
                </span>
+               <el-breadcrumb style="color:#ffffff" separator="/">
+                <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+                <el-breadcrumb-item :key="index" v-for="(item,index) in matched">{{item.meta.title}}</el-breadcrumb-item>
+                </el-breadcrumb>
             </div>
             <div class="main-content">
                <!-- <div class="main-left">
@@ -166,7 +174,9 @@
                         </el-tabs>
                     </div>
                 </div> -->
+               <transition name='my' mode="out-in">
                 <router-view></router-view>
+               </transition>
             </div>
         </div>
     </div>
@@ -175,14 +185,18 @@
 <script>
     export default {
         watch:{
-            
+            '$route':function(value){
+                console.log(this.$route)
+                this.matched = value.matched.slice(1)
+            }
         },
         data(){
             return{
                 activeName2:'first',
                 isCollapse:false,
                 icon:'el-icon-s-unfold',
-                activeName:'first'
+                activeName:'first',
+                matched:[]
             }
         },
         methods:{
@@ -194,6 +208,9 @@
                     this.icon = 'el-icon-s-unfold'
                 }
             }
+        },
+        mounted(){
+            this.$router.push('/home/collect')
         }
     }
 </script>
@@ -206,7 +223,7 @@
              text-align: center;
              font-weight: bolder;
              font-size: 20px;
-             padding-top: 10px;
+             padding: 10px 0;
             
         }
         width: 100%;
@@ -229,23 +246,28 @@
         }
         .header{
             height: 7%;
-            background: #3a3f51;
+            background: #ffffff;
             display: flex;
             align-items: center;
             padding: 0 20px;
             font-size: 24px;
             color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: absolute;
+            z-index: 11;
+            width: 100%;
         }
     }
     .main-content{
         display: flex;
         height: 93%;
-        box-sizing: border-box;
-
+        // box-sizing: border-box;
+        padding-top: 52px;
         .main-left{
             width: 27%;
             border-right: 2.5px solid #f6f6f6;
             background: #fbfcfe;
+            position: relative;
         }
         .main-right{
             flex:1;
@@ -305,4 +327,6 @@
         color: darkred;
     }
     .foodPrice{margin-left: 10px}
+    .my-enter,.my-leave-to{opacity: 0}
+    .my-enter-active,.my-leave-active{transition:opacity 0.3s ease-in-out;}
 </style>
