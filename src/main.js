@@ -11,7 +11,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 import {post,get} from './commen/http'
 Vue.prototype.$get = get
-
+//导出excell
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
 
 Vue.config.productionTip = false
 

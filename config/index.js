@@ -13,6 +13,7 @@ module.exports = {
     proxyTable: {
       '/api':{
         target:'http://v.juhe.cn',
+        // target:'http://172.20.10.2',
         changeOrigin:true,
         pathRewrite:{
           '^/api':''

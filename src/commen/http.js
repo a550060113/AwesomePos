@@ -48,7 +48,6 @@ $axios.interceptors.request.use(function (config) {
             Message.err(err.data.message)
       }
     }
-    console.log(typeof error)
     console.log(error)
     console.log('err',error.response)
     return Promise.reject(error);

@@ -179,7 +179,6 @@ export default {
                         goodsName:'香脆鸡柳',
                         price:17
                     }
-
                 ],
                 type0Goods:[{
                     goodsId:1,
@@ -273,7 +272,8 @@ export default {
 
 <style lang="scss" scoped>
       .container{
-          display: flex
+          display: flex;
+          height: 100%;
       }
     
    

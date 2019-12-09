@@ -6,15 +6,19 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'login',
-    //   component:resolve => require(['@/views/login.vue'],resolve)
-    // },
     {
       path:'/',
-      redirect:'/home'
+      redirect:'login'
     },
+    {
+      path: '/login',
+      name: 'login',
+      component:resolve => require(['@/views/login.vue'],resolve)
+    },
+    // {
+    //   path:'/',
+    //   redirect:'/home'
+    // },
     {
       path:'/home',
       name:'home',
@@ -35,6 +39,16 @@ export default new Router({
         name:'test',
         meta:{title:'测试'},
         component:resolve=>require(['@/views/test.vue'],resolve)
+      },{
+        path:'goodsTable',
+        name:'goodsTable',
+        meta:{title:'商品列表'},
+        component:resolve=>require(['@/views/goodsTable.vue'],resolve)
+      },{
+        path:'statistics',
+        name:'statistics',
+        meta:{title:'数据表'},
+        component:resolve=>require(['@/views/statistics.vue'],resolve)
       }]
     }
   ]
