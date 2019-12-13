@@ -11,7 +11,7 @@
           <el-col :span='6'>
                 <!-- 导出excell start -->
       <download-excel
-     
+
       class = "export-excel-wrapper"
       :data = "tableData"
       :fields = "json_fields"
@@ -22,12 +22,13 @@
 <!-- 导出excell end -->
           </el-col>
       </el-row>
-      
-        
+
+
         <el-card style="width:90%" class="box-card">
     <el-table
         border
-      :data="tableData.filter(item=>!search || item.goodsName.includes(search)||item.goodsId.toString().includes(search))"
+        :default-sort="{prop:'price',order: 'ascending'}"
+        :data="tableData.filter(item=>!search || item.goodsName.includes(search)||item.goodsId.toString().includes(search))"
       style="width: 100%">
       <el-table-column
         prop="goodsId"
@@ -40,12 +41,13 @@
         width="380">
       </el-table-column>
       <el-table-column
+        sortable
         prop="price"
         label="价格">
       </el-table-column>
     </el-table>
         </el-card>
-  
+
     </div>
 </template>
 

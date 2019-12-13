@@ -26,7 +26,7 @@ $axios.interceptors.request.use(function (config) {
     if (loading) {
       loading.close()
     }
-    console.log(response)
+    // console.log(response)
     const code = response.status
     if(code >= 200 && code <=300 || code == 304){
       return Promise.resolve(response.data);
@@ -48,17 +48,17 @@ $axios.interceptors.request.use(function (config) {
             Message.err(err.data.message)
       }
     }
-    console.log(error)
-    console.log('err',error.response)
+    // console.log(error)
+    // console.log('err',error.response)
     return Promise.reject(error);
   });
 
 function post(url,data){
   return new Promise((resolve,reject)=>{
-    $axios.get(url,qs.stringify(data)).then(res=>{
+    $axios.post(url,qs.stringify(data)).then(res=>{
       resolve(res)
     }).catch(err=>{
-      console.log(err)
+      console.log(err.response)
       reject(err)
     })
   })

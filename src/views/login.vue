@@ -21,11 +21,17 @@
 
 <script>
     import drag from '@/components/drag'
+    import { mapState,mapMutations,mapGetters} from 'vuex'
     export default {
+        computed:{
+            // ...mapState(['adminName','password']),
+            ...mapGetters(['getName','getPassword'])
+        },
         components:{
             drag
         },
         methods:{
+            ...mapMutations(['recode_admin']),
             //判断滑块有无滑到底
             overHandle(){
                 this.isover = true
@@ -48,10 +54,27 @@
                         });
                         return;
                     }
-                    this.$message({
-                        message: '登录成功',
-                        type: 'success'
-                    });
+                    if (this.getName == this.user.name){
+                            if(this.getPassword == this.user.psd){
+                                this.recode_admin()
+                                this.$router.push('/home')
+                                this.$message({
+                                    message: '登录成功',
+                                    type: 'success'
+                                });
+                            }else{
+                                this.$message({
+                                    message: '密码错误',
+                                    type: 'warning'
+                                })
+                            }
+                    }else{
+                        this.$message({
+                            message: '不存在用户名',
+                            type: 'warning'
+                        })
+                    }
+
                 })
             }
         },

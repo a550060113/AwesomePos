@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import {getStore} from '@/commen/mUtils'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path:'/',
@@ -25,10 +25,10 @@ export default new Router({
       meta:{title:'首页'},
       component:resolve => require(['@/views/home.vue'],resolve),
       children:[
-      //   {
-      //   path:"/home",
-      //   redirect:'/home/collect'
-      // },
+        {
+        path:"/home",
+        redirect:'/home/collect'
+      },
       {
         path:'collect',
         name:'collect',
@@ -53,3 +53,27 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to,from,next)=>{
+    if (to.path !== '/login'){
+      if(getStore('user')){
+        next()
+      }else{
+        next({
+          path:'/login',
+          replace:true
+        })
+      }
+    }else if (to.path == '/login'){
+        if(!getStore('user')){
+            next()
+        }else{
+          next('/home')
+        }
+    }
+
+})
+
+
+
+export default router

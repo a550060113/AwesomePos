@@ -23,12 +23,12 @@
                 <i class="iconfont icon-goumai"></i>
                     <span slot="title">首页</span>
                 </template>
-               
+
                 <el-menu-item index="/home/collect">收银</el-menu-item>
-                
-                    
+
+
                     <el-menu-item index="/home/test">选项2</el-menu-item>
-                
+
 
             </el-submenu>
    <el-menu-item index="2">
@@ -44,7 +44,7 @@
                         表格
                     </el-menu-item>
                 </el-submenu>
-                
+
                 <el-menu-item index="4">
                     <i class="iconfont icon-huiyuanqia"></i>
                     <span slot="title">会员</span>
@@ -57,7 +57,7 @@
                     <i class="iconfont icon-gongnengjianyi"></i>
                     <span slot="title">设置</span>
                 </el-menu-item>
-                    
+
             </el-menu>
        </div>
         <div class="col right">
@@ -73,32 +73,34 @@
                     <i @click="getFullCreeen" style="" class="el-icon-full-screen"></i>
                     <el-dropdown style="position:absolute;width:65px;right:32px;top:17px">
                     <span class="el-dropdown-link">
-                        adimin<i class="el-icon-caret-bottom"></i>
+                        {{this.getName}}<i class="el-icon-caret-bottom"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="gotoHomepage" icon="el-icon-s-home" >
                             首页
                         </el-dropdown-item>
                         <el-dropdown-item icon="el-icon-s-custom">我的主页</el-dropdown-item>
-                        <el-dropdown-item icon="el-icon-position" divided>退出</el-dropdown-item>
+                        <el-dropdown-item @click.native="logOut" icon="el-icon-position" divided>退出</el-dropdown-item>
                         </el-dropdown-menu>
                  </el-dropdown>
                  <el-avatar  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
                 </div>
-               
+
             </div>
-            
+
             <div class="main-content">
                <transition name='my' mode="out-in">
                 <router-view></router-view>
                </transition>
-               
+
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {deleteStore} from '@/commen/mUtils'
+    import {mapGetters} from 'vuex'
     export default {
         watch:{
             '$route':function(value){
@@ -125,14 +127,14 @@
             },
         getFullCreeen(){
             this.n++;
-            this.n%2==0? 
+            this.n%2==0?
             this.outFullCreeen(document):this.inFullCreeen(document.documentElement)
         },
         inFullCreeen(element){
             let el = element;
             let rfs = el.requestFullScreen || el.webkitRequestFullScreen ||
                 el.mozRequestFullScreen || el.msRequestFullScreen;
-            if (typeof rfs != "undefined" && rfs) { 
+            if (typeof rfs != "undefined" && rfs) {
                 rfs.call(el);
             } else if (typeof window.ActiveXObject != "undefined") {
                 let wscript = new ActiveXObject("WScript.Shell");
@@ -145,7 +147,7 @@
             let el = element;
             let cfs = el.cancelFullScreen || el.webkitCancelFullScreen ||
                 el.mozCancelFullScreen || el.exitFullScreen;
-            if (typeof cfs != "undefined" && cfs) { 
+            if (typeof cfs != "undefined" && cfs) {
                 cfs.call(el);
             } else if (typeof window.ActiveXObject != "undefined") {
                 let wscript = new ActiveXObject("WScript.Shell");
@@ -158,12 +160,16 @@
             this.$router.push('/home/collect')
         },
         logOut(){
-
-        }
+            deleteStore('user')
+            this.$router.push('/login')
+            }
+        },
+    mounted(){
+       this.gotoHomepage()
     },
-        mounted(){
-           this.gotoHomepage() 
-        }
+    computed:{
+            ...mapGetters(['getName'])
+    }
     }
 </script>
 
@@ -175,7 +181,7 @@
              font-weight: bolder;
              font-size: 20px;
              padding: 10px 0;
-            
+
         }
         width: 100%;
         height: 100%;
