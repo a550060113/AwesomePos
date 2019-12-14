@@ -12,5 +12,8 @@ export default {
         if(admin && localStorage){
             localStorage.removeItem('user')
         }
+    },
+    update(state,data){
+        state.tableData.push(data)
     }
 }

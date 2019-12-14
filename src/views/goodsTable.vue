@@ -9,17 +9,22 @@
           placeholder="输入关键字搜索"/>
           </el-col>
           <el-col :span='6'>
+              <el-button @click="dialogFormVisible = true" type="success" size="medium">&nbsp;新增商品&nbsp;</el-button>
                 <!-- 导出excell start -->
-      <download-excel
+              <download-excel
+                      style="display: inline-block"
+                      class = "export-excel-wrapper"
+              :data = "tableData"
+              :fields = "json_fields"
+              name = "商品列表.xls">
+              <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
+              <el-button type="primary" size="medium">导出EXCEL</el-button>
+              </download-excel>
+        <!-- 导出excell end -->
 
-      class = "export-excel-wrapper"
-      :data = "tableData"
-      :fields = "json_fields"
-      name = "商品列表.xls">
-      <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
-      <el-button type="primary" size="small">导出EXCEL</el-button>
-</download-excel>
-<!-- 导出excell end -->
+          </el-col>
+          <el-col :span="6">
+
           </el-col>
       </el-row>
 
@@ -48,13 +53,82 @@
     </el-table>
         </el-card>
 
+      <el-dialog title="商品入库" :visible.sync="dialogFormVisible">
+          <el-form :rules="rules" ref="ruleForm" :model="form" size="medium" label-width="80px">
+              <el-form-item prop="id" label="商品Id" :label-width="formLabelWidth">
+                  <el-input v-model="form.id"></el-input>
+              </el-form-item>
+              <el-form-item prop="goodsName" label-width="100px" label="商品名称" :label-width="formLabelWidth">
+                  <el-input v-model="form.goodsName"></el-input>
+              </el-form-item>
+              <el-form-item prop="goodsPrice" label="价格" :label-width="formLabelWidth">
+                  <el-input v-model="form.goodsPrice"></el-input>
+              </el-form-item>
+
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+          </div>
+      </el-dialog>
+
+
     </div>
 </template>
 
 <script>
+    import {mapGetters,mapActions} from 'vuex'
 export default {
+    computed:{
+        ...mapGetters(['getTableData']),
+    },
+    created() {
+        this.tableData = this.getTableData
+    },
+    methods:{
+        ...mapActions(['action_upLoading']),
+        //确定上传
+        submitForm(formName){
+
+            this.$refs[formName].validate((valid) => {
+                console.log(valid)
+                if (valid) {
+                    console.log('成功')
+                    this.action_upLoading(this.form).then(res=>{
+                        this.dialogFormVisible = false
+                        this.form.id = null
+                        this.form.goodsName = null
+                        this.form.goodsPrice = null
+                        this.$message({
+                            message: res,
+                            type: 'success'
+                        });
+                    }).catch(err=>{
+                        this.$message.error(err);
+                    })
+                }else{
+                    this.$message({
+                        message: '请输入完整',
+                        type: 'warning'
+                    });
+                }
+            });
+        }
+    },
     data() {
         return {
+          form:{
+            id:null,
+            goodsName:null,
+            goodsPrice:null
+          },
+            rules:{
+                id:[{ required: true, message: '请输入商品Id', trigger: 'blur' }],
+                goodsName:[{ required: true, message: '请输入商品名称', trigger: 'blur' }],
+                goodsPrice:[{ required: true, message: '请输入单品价格', trigger: 'blur' }],
+            },
+            formLabelWidth: '120px',
+          dialogFormVisible: false,
           search:'',
           json_fields: {
         "商品Id": "goodsId",    //常规字段
@@ -66,47 +140,7 @@ export default {
           }
         }
       },
-          tableData: [{
-                        goodsId:1,
-                        goodsName:'香辣鸡腿堡',
-                        price:18
-                    }, {
-                        goodsId:2,
-                        goodsName:'田园鸡腿堡',
-                        price:15
-                    }, {
-                        goodsId:3,
-                        goodsName:'和风汉堡',
-                        price:15
-                    }, {
-                        goodsId:4,
-                        goodsName:'快乐全家桶',
-                        price:80
-                    }, {
-                        goodsId:5,
-                        goodsName:'脆皮炸鸡腿',
-                        price:10
-                    }, {
-                        goodsId:6,
-                        goodsName:'魔法鸡块',
-                        price:20
-                    }, {
-                        goodsId:7,
-                        goodsName:'可乐大杯',
-                        price:10
-                    }, {
-                        goodsId:8,
-                        goodsName:'雪顶咖啡',
-                        price:18
-                    }, {
-                        goodsId:9,
-                        goodsName:'大块鸡米花',
-                        price:15
-                    }, {
-                        goodsId:20,
-                        goodsName:'香脆鸡柳',
-                        price:17
-                    }]
+          tableData:null
         }
       }
 }

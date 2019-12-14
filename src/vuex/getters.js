@@ -4,5 +4,8 @@ export default {
     },
     getPassword(state){
         return state.password
+    },
+    getTableData(state){
+        return state.tableData
     }
 }

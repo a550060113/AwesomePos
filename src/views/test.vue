@@ -1,6 +1,6 @@
 <template>
-    <div>
-    <h1>测试</h1>
+    <div class="container" style="padding: 20px">
+    <h1>接口API测试</h1>
     <button @click="getData">获取</button>
     </div>
 </template>

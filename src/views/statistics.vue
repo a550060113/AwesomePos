@@ -1,5 +1,5 @@
 <template>
-    <div class="container" style="padding:20px 0 20px 68px;">
+    <div class="container" style="background:#f6f6f6;padding:20px 0 20px 68px;">
         <el-row :gutter="30">
             <el-col :span="9">
                     <el-card>
@@ -41,7 +41,7 @@ export default {
         padding-top: 20px;
 
         width: 100%;
-        height: calc(100% - 50px);
+        /*height: calc(100% - 50px);*/
 
     }
 </style>

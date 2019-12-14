@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+<!--        <h1>销售总量</h1>-->
         <div class="line" id="myChart" style="{width: 280px;height: 350px;}">
 
         </div>
@@ -23,6 +24,9 @@ export default {
         drawLine(){
             let myChart = echarts.init(document.getElementById('myChart'))
             myChart.setOption({
+                title: {
+                    text: '销售总量'
+                },
     xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -32,7 +36,7 @@ export default {
         type: 'value'
     },
     series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        data: [3032, 2860, 2754, 3145, 3286, 3281,2632],
         type: 'line',
         areaStyle: {}
     }]

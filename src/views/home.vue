@@ -27,7 +27,7 @@
                 <el-menu-item index="/home/collect">收银</el-menu-item>
 
 
-                    <el-menu-item index="/home/test">选项2</el-menu-item>
+                    <el-menu-item index="/home/test">测试</el-menu-item>
 
 
             </el-submenu>
