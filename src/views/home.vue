@@ -20,7 +20,7 @@
             >
             <el-submenu index="1" >
                 <template slot="title">
-                <i class="iconfont icon-goumai"></i>
+                <i class="iconfont el-icon-s-home"></i>
                     <span slot="title">首页</span>
                 </template>
 
@@ -31,28 +31,32 @@
 
 
             </el-submenu>
-   <el-menu-item index="2">
-                    <i class="iconfont icon-dianpu"></i>
-                    <span slot="title">店铺</span>
-                </el-menu-item>
                 <el-submenu index="3">
                     <template slot="title">
                         <i class="iconfont icon-hanbao"></i>
-                    <span slot="title">商品</span>
+                        <span slot="title">商品</span>
                     </template>
                     <el-menu-item index="/home/goodsTable">
                         表格
                     </el-menu-item>
                 </el-submenu>
+                <el-menu-item index="/home/statistics">
+                    <i class="iconfont icon-tubiao"></i>
+                    <span slot="title">统计</span>
+                </el-menu-item>
+
+                <el-menu-item index="2">
+                    <i class="iconfont icon-dianpu"></i>
+                    <span slot="title">店铺</span>
+                </el-menu-item>
+
+
 
                 <el-menu-item index="4">
                     <i class="iconfont icon-huiyuanqia"></i>
                     <span slot="title">会员</span>
                 </el-menu-item>
-                <el-menu-item index="/home/statistics">
-                    <i class="iconfont icon-zuanshi"></i>
-                    <span slot="title">统计</span>
-                </el-menu-item>
+
                 <el-menu-item index="6">
                     <i class="iconfont icon-gongnengjianyi"></i>
                     <span slot="title">设置</span>

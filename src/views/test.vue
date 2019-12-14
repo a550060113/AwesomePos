@@ -26,6 +26,9 @@ export default {
                 console.log(res)
             })
         }
+    },
+    mounted() {
+        this.$store.dispatch('aaa')
     }
 }
 </script>

@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './vuex/index'
+import store from './store/index'
 //初始化样式
 import 'normalize.css'
 import './iconfont/iconfont.css'
 //引入element-ui
+
+import '@/commen/iconfont/iconfont.css'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
