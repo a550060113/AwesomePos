@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="line" id="myChart" :style="{width: '400px', height: '400px'}">
+        <div class="line" id="myChart" style="{width: 280px;height: 350px;}">
 
         </div>
  </div>
@@ -12,6 +12,7 @@ let echarts = require('echarts/lib/echarts')
 // 引入柱状图组件
 require('echarts/lib/chart/line')
 // 引入提示框和title组件
+require('echarts/lib/component/legend')
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
 export default {
