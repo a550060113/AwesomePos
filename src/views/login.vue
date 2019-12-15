@@ -21,7 +21,7 @@
 
 <script>
     import drag from '@/components/drag'
-    import { mapMutations,mapGetters} from 'vuex'
+    import { mapMutations,mapGetters,mapActions} from 'vuex'
     export default {
         computed:{
             ...mapGetters(['getName','getPassword'])
@@ -30,6 +30,7 @@
             drag
         },
         methods:{
+            ...mapActions(['login']),
             ...mapMutations(["RECODE_ADMIN"]),
             //判断滑块有无滑到底
             overHandle(){
@@ -55,12 +56,14 @@
                     }
                     if (this.getName == this.user.name){
                             if(this.getPassword == this.user.psd){
-                                this.RECODE_ADMIN()
-                                this.$router.push('/home')
-                                this.$message({
-                                    message: '登录成功',
-                                    type: 'success'
-                                });
+                                this.login().then(()=>{
+                                    this.$router.push('/home')
+                                    this.$message({
+                                        message: '登录成功',
+                                        type: 'success'
+                                    });
+                                })
+
                             }else{
                                 this.$message({
                                     message: '密码错误',
@@ -75,6 +78,12 @@
                     }
 
                 })
+            },
+            open1() {
+                const h = this.$createElement;
+                this.$notify({
+                    message: h('i', { style: 'color: teal'},'默认账号:admin,密码:123456')
+                });
             }
         },
         data(){
@@ -92,6 +101,7 @@
             }
         },
         mounted() {
+            this.open1()
             this.show = true
         }
     }

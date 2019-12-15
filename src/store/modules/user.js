@@ -1,5 +1,5 @@
 import {post} from '@/commen/http.js'
-import {setStore} from '@/commen/mUtils.js'
+import {setStore,getStore} from '@/commen/mUtils.js'
 import {
     RECODE_ADMIN,
     DELECTE_ADMIN
@@ -28,18 +28,15 @@ const mutations = {
 
 const actions = {
     //登录
-    login({commit},data){
-        //data是输入框到用户名
-        return new Promise((resolve,reject)=>{
-            post('',{userName: data.name,password:data.pad}).then(res=>{
-                //如果验证正确用户名保存到state
-                if(res){
-                    commit.recode_admin(data.name)
-                }else{
-                    reject(res)
-                }
-            })
-        })
+    login({commit,state},data){
+       return new Promise((resolve,reject)=>{
+           commit('RECODE_ADMIN')
+           if(getStore('user')){
+               resolve()
+           }else{
+               reject('登录失败')
+           }
+       })
     },
 
 }
