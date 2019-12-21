@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-       <div class="col aside">
+       <div class="col aside hidden-xs-only">
            <div class="collect_money" v-if="isCollapse">
                <p>收银</p>
                <span>系统</span>
@@ -187,6 +187,7 @@
              padding: 10px 0;
 
         }
+        min-width: 1086px;
         width: 100%;
         height: 100%;
         display: flex;
@@ -229,6 +230,7 @@
         overflow-y: scroll;
 
     }
+
     .my-enter,.my-leave-to{opacity: 0}
     .my-enter-active,.my-leave-active{transition:opacity 0.3s ease-in-out;}
 

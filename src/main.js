@@ -5,6 +5,8 @@ import store from './store/index'
 //初始化样式
 import 'normalize.css'
 import './iconfont/iconfont.css'
+import 'element-ui/lib/theme-chalk/display.css';
+
 //引入element-ui
 
 import '@/commen/iconfont/iconfont.css'

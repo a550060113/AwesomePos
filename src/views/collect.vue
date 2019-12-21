@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-         <div class="main-left">
+         <div class="main-left" >
                    <el-tabs v-model="activeName" >
                        <el-tab-pane label="点餐" name="first">
                            <el-table
@@ -108,9 +108,9 @@
 
                         </el-tabs>
                     </div>
-          </div>  
+          </div>
     </div>
-</template>   
+</template>
 
 <script>
 export default {
@@ -271,33 +271,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .el-tabs__nav-wrap::after{
+        background: none!important;
+    }
       .container{
           display: flex;
           height: 100%;
       }
-    
-   
+
+
         .main-left{
             width: 27%;
             border-right: 2.5px solid #f6f6f6;
             background: #fbfcfe;
+            padding: 20px;
         }
         .main-right{
             flex:1;
             background-color: #f3f5fa;
         }
-    
+
     .totalDiv{
         background-color: #fff;
         padding: 10px;
-        border-bottom: 1px solid #D3DCE6;
+        border: 1px solid #EBEEF5;
         text-align: center;
-    }
+        border-top: none;
+        }
+
     .often-goods{
         height:39px;
-        background:#e8e8e8;
+        background:#f2f2f2;
         line-height:39px;
+        padding-left:10px ;
     }
+
     .goods-list{
         padding: 30px;
     }
@@ -338,6 +346,9 @@ export default {
     .foodName{
         margin: 10px;
         color: darkred;
+    }
+    .goods-type{
+        padding: 10px;
     }
     .foodPrice{margin-left: 10px}
 </style>

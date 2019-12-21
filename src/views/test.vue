@@ -19,16 +19,15 @@ export default {
             })
         },
         getData(){
-            this.$post('/Pos/src/servlet/LogingServlet.java',{
-                userName:'admin',
-                password:123456
+            this.$post('/Pos/ajax/loginservlet',{
+                username:'admin',
+                password:'123456'
             }).then(res=>{
                 console.log(res)
             })
         }
     },
     mounted() {
-        this.$store.dispatch('aaa')
     }
 }
 </script>

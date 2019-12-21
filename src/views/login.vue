@@ -1,8 +1,17 @@
 <template>
     <div class="wrapper">
+        <Vcode
+                :show="isShow"
+                @onSuccess="onSuccess"
+                @onClose="onClose"
+        />
+        <h1 style="float:right;margin: 30px 190px 0 0;color: #fff;">餐饮收银后台系统</h1>
         <transition name="my">
+
             <div class="userForm" v-if="show">
+
                 <el-form ref="ruleForm" label-width="65px" :model="user" :rules="rules" >
+                    <h4 style="text-align: center;margin-bottom: 30px;color:#409EFF">账号密码登录</h4>
                     <el-form-item label="用户名" prop="name">
                         <el-input v-model="user.name"></el-input>
                     </el-form-item>
@@ -10,8 +19,8 @@
                         <el-input show-password v-model="user.psd"></el-input>
                     </el-form-item>
                 </el-form>
-                <drag @changeDrag="overHandle"></drag>
-                <el-button @click="submitForm('ruleForm')" size="medium" type="primary" round>登录</el-button>
+<!--                <drag @changeDrag="overHandle"></drag>-->
+                <el-button @click="onSubmit('ruleForm')" size="medium" type="primary" round>登录</el-button>
             </div>
         </transition>
         <div class="bg"></div>
@@ -21,39 +30,64 @@
 
 <script>
     import drag from '@/components/drag'
+    import Vcode from "vue-puzzle-vcode";
     import { mapMutations,mapGetters,mapActions} from 'vuex'
     export default {
         computed:{
             ...mapGetters(['getName','getPassword'])
         },
         components:{
-            drag
+            drag,Vcode
         },
         methods:{
-            ...mapActions(['login']),
+            ...mapActions(["login","_login"]),
             ...mapMutations(["RECODE_ADMIN"]),
             //判断滑块有无滑到底
             overHandle(){
                 this.isover = true
                 console.log(this.isover)
             },
+            /*开启api接口的时候使用*/
+            submitForm1(formName){
+                this.$refs[formName].validate((valid)=>{
+                    // if (valid == false){
+                    //     this.$message({
+                    //         message: '请检查',
+                    //         type: 'warning'
+                    //     });
+                    //     return
+                    // }
+                    this._login(this.user).then(res=>{
+                        this.$message({
+                            message: '登录成功',
+                            type: 'success'
+                        });
+                    }).catch(err=>{
+                        this.$message({
+                            message: err,
+                            type: 'warning'
+                        });
+                    })
+                })
+
+            },
             //登录校验
             submitForm(formName){
                 this.$refs[formName].validate((valid)=>{
-                    if (valid == false){
-                        this.$message({
-                            message: '请检查',
-                            type: 'warning'
-                        });
-                        return
-                    }
-                    if(this.isover === false){
-                        this.$message({
-                            message: '请把滑块移到最右边',
-                            type: 'warning'
-                        });
-                        return;
-                    }
+                    // if (valid == false){
+                    //     this.$message({
+                    //         message: '请检查',
+                    //         type: 'warning'
+                    //     });
+                    //     return
+                    // }
+                    // if(this.isover === false){
+                    //     this.$message({
+                    //         message: '请把滑块移到最右边',
+                    //         type: 'warning'
+                    //     });
+                    //     return;
+                    // }
                     if (this.getName == this.user.name){
                             if(this.getPassword == this.user.psd){
                                 this.login().then(()=>{
@@ -82,14 +116,36 @@
             open1() {
                 const h = this.$createElement;
                 this.$notify({
-                    message: h('i', { style: 'color: teal'},'默认账号:admin,密码:123456')
+                    message: '默认账号:admin,密码:123456',
+                    position: 'bottom-right'
                 });
+            },
+            onSubmit(formName){
+                this.$refs[formName].validate((valid)=> {
+                    if (valid == false) {
+                        this.$message({
+                            message: '请检查',
+                            type: 'warning'
+                        });
+                        return
+                    }else{
+                        this.isShow = true;
+                    }
+                })
+            },
+            // 用户点击遮罩层，应该关闭模态框
+            onClose(){
+                this.isShow = false;
+            },
+            onSuccess(){
+                this.submitForm('ruleForm')
             }
         },
         data(){
             return{
                 show:false,
                 isover:false,
+                isShow:false,
                 user:{
                     name:'',
                     psd:'',
@@ -113,11 +169,12 @@
        position: relative;
        height:100%;
        width: 100%;
+       overflow: hidden;
        background: #4896e0;
        .userForm{
            position: absolute;
            width: 320px;
-           height: 260px;
+           height: 250px;
            background: #FFFFFF;
            border-radius: 20px;
            box-shadow: 0 0 7px #666666;

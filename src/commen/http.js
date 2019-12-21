@@ -6,6 +6,8 @@ const $axios = axios.create({
   timeout: 30000,
   baseURL: '/api'
 })
+// $axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
+
 let loading = null;
 
 
@@ -39,6 +41,7 @@ $axios.interceptors.request.use(function (config) {
       loading.close()
     }
     let err = error.response
+    console.log(err)
     if(err){
       switch(err.status){
         case 404:
@@ -55,7 +58,14 @@ $axios.interceptors.request.use(function (config) {
 
 function post(url,data){
   return new Promise((resolve,reject)=>{
-    $axios.post(url,qs.stringify(data)).then(res=>{
+    var bodyData  = qs.stringify(data)
+    $axios.post(url, bodyData
+    // ,{
+    //       headers:{
+    //         'Content-Type':'application/x-www-form-urlencoded'
+    //       }
+    //     }
+    ).then(res=>{
       resolve(res)
     }).catch(err=>{
       console.log(err.response)

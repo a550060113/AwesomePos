@@ -1,7 +1,7 @@
 
 export const RECODE_ADMIN = "RECODE_ADMIN"
 export const DELECTE_ADMIN = "DELECTE_ADMIN"
-
+export const RECODE_STATE = "RECODE_STATE"
 
 
 
