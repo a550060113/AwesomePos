@@ -285,6 +285,9 @@ export default {
             border-right: 2.5px solid #f6f6f6;
             background: #fbfcfe;
             padding: 20px;
+            /*>>> .el-tabs__nav-wrap::after{*/
+            /*    background: none!important;*/
+            /*}*/
         }
         .main-right{
             flex:1;
@@ -351,4 +354,11 @@ export default {
         padding: 10px;
     }
     .foodPrice{margin-left: 10px}
+</style>
+
+
+<style>
+    .el-tabs__nav-wrap::after{
+        background: none!important;
+    }
 </style>
