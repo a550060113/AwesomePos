@@ -52,7 +52,7 @@
          </div>
           <div class="main-right">
                     <div class="often-goods">
-                        常用商品
+                        全部商品
                     </div>
                     <div class="goods-list">
                         <ul>
@@ -138,47 +138,47 @@ export default {
                 totalMoney:0,
                 tableData:[],
                 oftenGoods:[
-                    {
-                        goodsId:1,
-                        goodsName:'香辣鸡腿堡',
-                        price:18
-                    }, {
-                        goodsId:2,
-                        goodsName:'田园鸡腿堡',
-                        price:15
-                    }, {
-                        goodsId:3,
-                        goodsName:'和风汉堡',
-                        price:15
-                    }, {
-                        goodsId:4,
-                        goodsName:'快乐全家桶',
-                        price:80
-                    }, {
-                        goodsId:5,
-                        goodsName:'脆皮炸鸡腿',
-                        price:10
-                    }, {
-                        goodsId:6,
-                        goodsName:'魔法鸡块',
-                        price:20
-                    }, {
-                        goodsId:7,
-                        goodsName:'可乐大杯',
-                        price:10
-                    }, {
-                        goodsId:8,
-                        goodsName:'雪顶咖啡',
-                        price:18
-                    }, {
-                        goodsId:9,
-                        goodsName:'大块鸡米花',
-                        price:15
-                    }, {
-                        goodsId:20,
-                        goodsName:'香脆鸡柳',
-                        price:17
-                    }
+                    // {
+                    //     goodsId:1,
+                    //     goodsName:'香辣鸡腿堡',
+                    //     price:18
+                    // }, {
+                    //     goodsId:2,
+                    //     goodsName:'田园鸡腿堡',
+                    //     price:15
+                    // }, {
+                    //     goodsId:3,
+                    //     goodsName:'和风汉堡',
+                    //     price:15
+                    // }, {
+                    //     goodsId:4,
+                    //     goodsName:'快乐全家桶',
+                    //     price:80
+                    // }, {
+                    //     goodsId:5,
+                    //     goodsName:'脆皮炸鸡腿',
+                    //     price:10
+                    // }, {
+                    //     goodsId:6,
+                    //     goodsName:'魔法鸡块',
+                    //     price:20
+                    // }, {
+                    //     goodsId:7,
+                    //     goodsName:'可乐大杯',
+                    //     price:10
+                    // }, {
+                    //     goodsId:8,
+                    //     goodsName:'雪顶咖啡',
+                    //     price:18
+                    // }, {
+                    //     goodsId:9,
+                    //     goodsName:'大块鸡米花',
+                    //     price:15
+                    // }, {
+                    //     goodsId:20,
+                    //     goodsName:'香脆鸡柳',
+                    //     price:17
+                    // }
                 ],
                 type0Goods:[{
                     goodsId:1,
@@ -265,7 +265,24 @@ export default {
                 this.totalCount = allCount
                 this.totalMoney = allPrice
 
+            },
+            getOffengGoods(){
+                this.$get(this.HOST + '/Pos/ajax/sendgoods').then(res=>{
+                if(res.length != 0 ){
+                    console.log(res)
+                    this.oftenGoods = res
+                    }
+                })
+            },
+            getTypesGoods(){
+                this.$get(this.HOST + '/Pos/ajax/sendgoodsimg').then(res=>{
+                    console.log('种类',res)
+                })
             }
+        },
+        created(){
+            this.getOffengGoods()
+            // this.getTypesGoods()
         }
     }
 </script>

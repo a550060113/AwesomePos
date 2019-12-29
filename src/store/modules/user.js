@@ -31,10 +31,10 @@ const mutations = {
         var admin = localStorage.getItem('user')
         if(admin){
             localStorage.removeItem('user')
-           /* 接口新增,使用接口的时候开启*/
-            // if(state.adminName){
-            //     state.adminName = ''
-            // }
+           // /* 接口新增,使用接口的时候开启*/
+            if(state.adminName){
+                state.adminName = ''
+            }
         }
     }
 }
@@ -52,7 +52,7 @@ const actions = {
        })
     },
     /*api登录验证*/
-    _login({commit,state},data){
+    _login({commit},data){
         return new Promise((resolve,reject)=>{
            var loading =  Loading.service({
                 lock: true,
@@ -61,19 +61,19 @@ const actions = {
                 background: 'rgba(0, 0, 0, 0.7)'
             });
             //登录验证
-            post('/Pos/src/servlet/LogingServlet',{
-                userName:data.name,
+            post( process.env.API_HOST + '/Pos/ajax/loginservlet',{
+                username:data.name,
                 password:data.psd
             }).then(res=>{
                 console.log(res)
-                if(res.data.success){
+                if(res.success){
                     loading.close()     //成功后关闭loading
                     commit('RECODE_STATE',data.name)        //保存成功的用户名到state
                     commit('RECODE_ADMIN')      //保存用户名到localStorage
                     router.push({path:'/home',replace:true})
                     resolve('登录成功')
                 }else{
-                    reject(res.data.message)
+                    reject(res.message)
                 }
             }).catch(err=>{
                 console.log(err)

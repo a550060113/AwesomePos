@@ -12,9 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api':{
-        target:process.env.API_HOST,
+        target:'http://25.23.154.22:8000',
         // target:'http://v.juhe.cn',
-        // target:'http://172.20.10.2',
         changeOrigin:true,
         pathRewrite:{
           '^/api':''
@@ -30,7 +29,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

@@ -17,6 +17,7 @@ Vue.use(ElementUI);
 import {post,get} from './commen/http'
 Vue.prototype.$get = get
 Vue.prototype.$post = post
+Vue.prototype.HOST = process.env.API_HOST
 //导出excell
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
@@ -25,9 +26,9 @@ Vue.config.productionTip = false
 console.log(process.env.API_HOST)
 
 new Vue({
-  el: '#app',
+  // el: '#app',
   router,
   store,
   components: { App },
   template: '<App/>'
-})
+}).$mount('#app')

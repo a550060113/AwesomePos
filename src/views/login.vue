@@ -49,7 +49,7 @@
             },
             /*开启api接口的时候使用*/
             submitForm1(formName){
-                this.$refs[formName].validate((valid)=>{
+                // this.$refs[formName].validate((valid)=>{
                     // if (valid == false){
                     //     this.$message({
                     //         message: '请检查',
@@ -59,21 +59,22 @@
                     // }
                     this._login(this.user).then(res=>{
                         this.$message({
-                            message: '登录成功',
+                            message: res,
                             type: 'success'
                         });
+                        this.isShow = false;
                     }).catch(err=>{
+                        this.isShow = false;
                         this.$message({
                             message: err,
                             type: 'warning'
                         });
                     })
-                })
-
+                // })
             },
             //登录校验
             submitForm(formName){
-                this.$refs[formName].validate((valid)=>{
+                // this.$refs[formName].validate((valid)=>{
                     // if (valid == false){
                     //     this.$message({
                     //         message: '请检查',
@@ -105,13 +106,14 @@
                                 })
                             }
                     }else{
+
                         this.$message({
                             message: '不存在用户名',
                             type: 'warning'
                         })
                     }
 
-                })
+                // })
             },
             open1() {
                 const h = this.$createElement;
@@ -138,7 +140,7 @@
                 this.isShow = false;
             },
             onSuccess(){
-                this.submitForm('ruleForm')
+                this.submitForm1()
             }
         },
         data(){
